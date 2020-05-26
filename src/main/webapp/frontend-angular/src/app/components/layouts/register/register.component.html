@@ -1,0 +1,235 @@
+<div role="main" class="row justify-content-center mt-5">
+  <div class="card card-container col-md-3">
+    <div class="card-body">
+      <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              id="username"
+              [(ngModel)]="form.username"
+              required
+              minlength="3"
+              maxlength="20"
+              #username="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+              <div *ngIf="username.errors.required">Username is required</div>
+              <div *ngIf="username.errors.minlength">
+                Username must be at least 3 characters
+              </div>
+              <div *ngIf="username.errors.maxlength">
+                Username must be at most 20 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              id="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              #email="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && email.invalid">
+              <div *ngIf="email.errors.required">Email is required</div>
+              <div *ngIf="email.errors.email">
+                Email must be a valid email address
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="firstname">First name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="firstname"
+              id="firstname"
+              [(ngModel)]="form.firstName"
+              required
+              minlength="2"
+              maxlength="20"
+              #firstName="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && firstName.invalid">
+              <div *ngIf="firstName.errors.required">First name is required</div>
+              <div *ngIf="firstName.errors.minlength">
+                First name must be at least 3 characters
+              </div>
+              <div *ngIf="firstName.errors.maxlength">
+                First name must be at most 20 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Last name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="lastname"
+              id="lastname"
+              [(ngModel)]="form.lastName"
+              required
+              minlength="2"
+              maxlength="20"
+              #lastName="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && lastName.invalid">
+              <div *ngIf="lastName.errors.required">Last name is required</div>
+              <div *ngIf="lastName.errors.minlength">
+                Last name must be at least 3 characters
+              </div>
+              <div *ngIf="firstName.errors.maxlength">
+                Last name must be at most 20 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              #password="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && password.invalid">
+              <div *ngIf="password.errors.required">Password is required</div>
+              <div *ngIf="password.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Signup as: </label>
+            <div>
+              <div>
+                <label for="customer">
+                  <input
+                    [(ngModel)]=form.role
+                    required
+                    type="radio" [value]="'customer'" name="role" id="customer" checked
+                    (change)="collapse('customer')">
+                  Customer</label>
+              </div>
+              <div>
+                <label for="driver">
+                  <input
+                    [(ngModel)]="form.role"
+                    type="radio" [value]="'driver'" name="role" id="driver"
+                    (change)="collapse('driver')">
+                  Driver
+                </label>
+              </div>
+              <div>
+                <label for="manager">
+                  <input
+                    [(ngModel)]="form.role"
+                    type="radio" [value]="'manager'" name="role" id="manager"
+                    (change)="collapse('manager')">
+                  Manager
+                </label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="driverToggled" id="driverForm">
+            <div class="form-group">
+              <label for="license">Driver license</label>
+              <input
+                type="text"
+                class="form-control"
+                name="license"
+                id="license"
+                required
+                [(ngModel)]="form.license"
+                minlength="5"
+                maxlength="20"
+                #license="ngModel"
+              />
+              <div class="alert-danger" *ngIf="f.submitted && license.invalid && driverToggled">
+                <div *ngIf="license.errors.required">License is required</div>
+                <div *ngIf="license.errors.minlength">
+                  License must be at least 5 characters
+                </div>
+                <div *ngIf="license.errors.maxlength">
+                  License must be at most 20 characters
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="category">Driver category</label>
+              <select
+                multiple
+                class="form-control custom-select"
+                id="category"
+                required
+                name="licenseCategories"
+                [(ngModel)]="form.licenseCategories"
+                #licenseCategories="ngModel">
+                <option>B</option>
+                <option>BE</option>
+                <option>C</option>
+                <option>CE</option>
+              </select>
+              <div class="alert-danger" *ngIf="f.submitted && licenseCategories.invalid && driverToggled">
+                <div *ngIf="licenseCategories.errors.required">Choose at least one category</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="managerToggled"
+               id="managerForm">
+            <div class="form-group">
+              <label for="companyName">Company name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="companyName"
+                id="companyName"
+                required
+                [(ngModel)]="form.companyName"
+                minlength="3"
+                maxlength="20"
+                #companyName="ngModel"
+              />
+              <div class="alert-danger" *ngIf="f.submitted && companyName.invalid && managerToggled">
+                <div *ngIf="companyName.errors.required">Company name is required</div>
+                <div *ngIf="companyName.errors.minlength">
+                  Company name must be at least 3 characters
+                </div>
+                <div *ngIf="companyName.errors.maxlength">
+                  Company name must be at most 20 characters
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">Sign Up</button>
+        </div>
+
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+          Signup failed!<br/>{{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

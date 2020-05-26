@@ -1,0 +1,38 @@
+<div class="row">
+  <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">Freight Management</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="''">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="showManagerBoard">
+        <a class="nav-link" [routerLink]="'manager'">Manager Board</a>
+      </li>
+      <li class="nav-item" *ngIf="showDriverBoard">
+        <a class="nav-link" [routerLink]="'driver'">Driver Board</a>
+      </li>
+      <li class="nav-item" *ngIf="showCustomerBoard">
+        <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="'customer'">Customer board</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'register'">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'login'">Login</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'profile'">{{ username }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+

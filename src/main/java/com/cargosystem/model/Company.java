@@ -1,7 +1,6 @@
 package com.cargosystem.model;
 
 import com.cargosystem.model.user.Driver;
-import com.cargosystem.model.user.Manager;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -35,5 +34,45 @@ public class Company {
         this.id = id;
         this.name = name;
         this.drivers = drivers;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(Set<Driver> drivers) {
+        this.drivers = drivers;
+    }
+
+    public Set<Cargo> getCargoList() {
+        return cargoList;
+    }
+
+    public void setCargoList(Set<Cargo> cargoList) {
+        this.cargoList = cargoList;
+    }
+
+    public Set<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 }

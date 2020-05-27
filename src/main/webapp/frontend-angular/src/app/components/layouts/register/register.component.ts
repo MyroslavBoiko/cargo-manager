@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../_services/auth/auth.service';
 import {Router} from '@angular/router';
-import * as $ from 'jquery';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -44,13 +42,11 @@ export class RegisterComponent implements OnInit {
 
   collapse(role: string) {
     if (role === 'manager') {
-      this.form.license = null;
-      this.form.licenseCategories = null;
       this.managerToggled = true;
       this.driverToggled = false;
       this.customerToggle = false;
     } else if (role === 'driver') {
-      this.managerToggled = false;
+      this.managerToggled = true;
       this.driverToggled = true;
       this.customerToggle = false;
     } else if (role === 'customer') {

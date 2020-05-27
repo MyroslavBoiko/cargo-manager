@@ -1,5 +1,7 @@
 package com.cargosystem.payload.request;
 
+import com.cargosystem.model.user.ELicenseCategory;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -30,7 +32,10 @@ public class SignupRequest {
     @Size(min = 5, max = 20)
     private String license;
 
-    private Set<String> licenseCategories;
+    @Size(min = 3, max = 20)
+    private String companyName;
+
+    private Set<ELicenseCategory> licenseCategories;
 
     @NotBlank
     @Size(min = 6, max = 40)
@@ -92,11 +97,19 @@ public class SignupRequest {
         this.license = license;
     }
 
-    public Set<String> getLicenseCategories() {
+    public Set<ELicenseCategory> getLicenseCategories() {
         return licenseCategories;
     }
 
-    public void setLicenseCategories(Set<String> licenseCategories) {
+    public void setLicenseCategories(Set<ELicenseCategory> licenseCategories) {
         this.licenseCategories = licenseCategories;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

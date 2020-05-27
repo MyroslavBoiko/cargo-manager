@@ -1,13 +1,14 @@
 package com.cargosystem.controller;
 
-import com.cargosystem.model.user.ERole;
-import com.cargosystem.model.user.Role;
-import com.cargosystem.model.user.User;
+import com.cargosystem.model.user.*;
 import com.cargosystem.payload.request.LoginRequest;
 import com.cargosystem.payload.request.SignupRequest;
+import com.cargosystem.payload.request.UserDataResponse;
 import com.cargosystem.payload.response.JwtResponse;
 import com.cargosystem.payload.response.MessageResponse;
-import com.cargosystem.repository.RoleRepository;
+import com.cargosystem.repository.CustomerRepository;
+import com.cargosystem.repository.DriverRepository;
+import com.cargosystem.repository.ManagerRepository;
 import com.cargosystem.repository.UserRepository;
 import com.cargosystem.security.jwt.JwtUtils;
 import com.cargosystem.security.service.UserDetailsImpl;
@@ -20,13 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,12 +41,51 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
+    DriverRepository driverRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
+    ManagerRepository managerRepository;
+
+    @Autowired
     JwtUtils jwtUtils;
 
     @GetMapping("/users")
     @PreAuthorize("hasRole('MANAGER')")
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DRIVER', 'CUSTOMER')")
+    public UserDataResponse getUser(@RequestParam Long userId) {
+        UserDataResponse userDataResponse = new UserDataResponse();
+        User user = userRepository.findById(userId).get();
+        userDataResponse.setFirstName(user.getFirstName());
+        userDataResponse.setLastName(user.getLastName());
+        userDataResponse.setEmail(user.getEmail());
+        userDataResponse.setUsername(user.getUsername());
+        List<ERole> roles = user.getRoles().stream()
+                .map(Role::getRole)
+                .collect(Collectors.toList());
+        ERole role = roles.get(0);
+        userDataResponse.setRole(role.name());
+        switch (role) {
+            case ROLE_DRIVER:
+                Driver driver = driverRepository.findByUserId(user.getId());
+                userDataResponse.setCompanyName(driver.getCompany().getName());
+                userDataResponse.setLicense(driver.getLicenseNumber());
+                userDataResponse.setLicenseCategories(driver.getCategories());
+                break;
+            case ROLE_MANAGER:
+                Manager manager = managerRepository.findByUserId(user.getId());
+                userDataResponse.setCompanyName(manager.getCompany().getName());
+                break;
+        }
+
+        return userDataResponse;
     }
 
     @PostMapping("/signin")

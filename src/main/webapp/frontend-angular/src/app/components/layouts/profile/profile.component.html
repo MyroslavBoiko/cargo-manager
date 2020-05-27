@@ -1,1 +1,40 @@
-<p>profile works!</p>
+<div class="row justify-content-center" style="margin-top: 60px;">
+  <div class="card col-4">
+
+    <div class="card-body">
+      <h5 class="card-title">{{firstName}} {{lastName}}</h5>
+      <p class="card-text">{{role}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between">
+        <p>Username: </p>
+        <p>{{username}}</p>
+      </li>
+      <li class="list-group-item d-flex justify-content-between">
+        <p>Email: </p>
+        <p>{{email}}</p>
+      </li>
+      <li *ngIf="role === 'ROLE_DRIVER' || role === 'ROLE_MANAGER'"
+          class="list-group-item d-flex justify-content-between">
+        <p>Company name: </p>
+        <p>{{companyName}}</p>
+      </li>
+
+      <li *ngIf="role === 'ROLE_DRIVER'"
+          class="list-group-item d-flex justify-content-between">
+        <p>License: </p>
+        <p>{{license}}</p>
+      </li>
+
+      <li *ngIf="role === 'ROLE_DRIVER'"
+          class="list-group-item d-flex">
+        <p class="mr-auto">License categories: </p>
+        <p *ngFor="let category of licenseCategories"
+           class="badge badge-warning p-2 ml-1 mr-1">{{category.licenseCategory}}</p>
+
+      </li>
+
+
+    </ul>
+  </div>
+</div>

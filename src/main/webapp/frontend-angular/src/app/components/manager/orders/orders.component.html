@@ -1,26 +1,26 @@
 <!-- Modal -->
-<div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade " id="exampleModalCenter"
+<div aria-hidden="true" aria-labelledby="orderDetails" class="modal fade " id="orderDetails"
      role="dialog"
      tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalCenterTitle">Order details</h4>
+        <h4 class="modal-title" id="orderDetailsTitle">Order details</h4>
         <button aria-label="Close" class="close" data-dismiss="modal" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div *ngIf="selected" class="modal-body">
         <div class="row">
           <div class="col-6">
             <div class="card h-100">
               <h5 class="card-header">Customer info</h5>
               <div class="card-body">
                 <div>
-                  <p><strong>First name: </strong> firstname</p>
-                  <p><strong>Last name: </strong> lastname</p>
-                  <p><strong>Address: </strong> Address</p>
-                  <p><strong>Email: </strong> Email</p>
+                  <p><strong>First name: </strong> {{selected.customer.firstName}}</p>
+                  <p><strong>Last name: </strong> {{selected.customer.lastName}}</p>
+                  <p><strong>Address: </strong> {{selected.address}}</p>
+                  <p><strong>Email: </strong>{{selected.customer.email}}</p>
                 </div>
 
               </div>
@@ -31,9 +31,9 @@
               <h5 class="card-header">Cargo info</h5>
               <div class="card-body">
                 <div>
-                  <p><strong>Cargo type: </strong> firstname</p>
-                  <p><strong>Price: </strong> lastname</p>
-                  <p><strong>Amount: </strong> Address</p>
+                  <p><strong>Cargo: </strong> {{selected.cargo.name}}</p>
+                  <p><strong>Price: </strong> {{selected.cargo.price}}</p>
+                  <p><strong>Company: </strong> {{selected.cargo.company.name}}</p>
                 </div>
 
               </div>
@@ -46,12 +46,11 @@
               <h5 class="card-header">Driver info</h5>
               <div class="card-body">
                 <div>
-                  <p><strong>First name: </strong> firstname</p>
-                  <p><strong>Last name: </strong> lastname</p>
-                  <p><strong>Email: </strong> Email</p>
-                  <p><strong>License: </strong> Email</p>
+                  <p><strong>First name: </strong> {{selected.driver.firstName}}</p>
+                  <p><strong>Last name: </strong> {{selected.driver.lastName}}</p>
+                  <p><strong>Email: </strong> {{selected.driver.email}}</p>
+                  <p><strong>License: </strong> {{selected.driver.license}}</p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -60,9 +59,10 @@
               <h5 class="card-header">Transport info</h5>
               <div class="card-body">
                 <div>
-                  <p><strong>Number: </strong> firstname</p>
-                  <p><strong>Required category: </strong> lastname</p>
-                  <p><strong>Max weight: </strong> Address</p>
+                  <p><strong>Brand: </strong> {{selected.transport.brand}}</p>
+                  <p><strong>Number: </strong> {{selected.transport.numberPlate}}</p>
+                  <p><strong>Required category: </strong> {{selected.transport.category}}</p>
+                  <p><strong>Max weight: </strong> {{selected.transport.maxWeight}}</p>
                 </div>
               </div>
             </div>
@@ -75,8 +75,92 @@
     </div>
   </div>
 </div>
+<div aria-hidden="true" aria-labelledby="driverAssign" class="modal fade " id="driverAssign"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="driverAssignTitle">Assign driver</h4>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          #f="ngForm"
+          (ngSubmit)="onSubmitDriverAssign(f)"
+          id="myForm"
+          novalidate>
+          <div class="ml-3 mt-1">
+            <h4>Choose driver:</h4>
+          </div>
+          <div class="row">
+            <div class="col-12" style="max-height: 220px; overflow-y: auto;">
+              <table class="table border">
+                <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr (click)="switchClickedDriverRow(i + 1, driver)" *ngFor="let driver of drivers; let i = index"
+                    [ngClass]="{'bg-success': i + 1 === clickedDriverRowNum}">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{driver.firstName + ' ' + driver.lastName}}</td>
+                  <td>{{driver.email}}</td>
+                  <td><p *ngFor="let category of driver.licenseCategories"
+                         class="badge badge-warning p-2 ml-1 mr-1">{{category}}</p></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
+          <div class="ml-3 mt-1">
+            <h4>Choose transport:</h4>
+          </div>
+          <div class="row">
+            <div class="col-12" style="max-height: 240px; overflow-y: auto;">
+              <table class="table border">
+                <thead class="thead-dark">
+                <tr class="align-baseline">
+                  <th scope="col">#</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Number</th>
+                  <th scope="col">Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr (click)="switchClickedTransportRow(i + 1, transport)"
+                    *ngFor="let transport of transport; let i = index"
+                    [ngClass]="{'bg-success': i + 1 === clickedTransportRowNum}">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{transport.brand}}</td>
+                  <td>{{transport.numberPlate}}</td>
+                  <td>{{transport.category}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+        <button class="btn btn-info" form="myForm" type="submit">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row mt-4">
-  <table class="table table-striped table-dark">
+  <table class="table table-striped table-dark" id="example">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -88,37 +172,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
+    <tr *ngFor="let order of orders; let i = index">
+      <th scope="row">{{i + 1}}</th>
+      <td>{{order.cargo.name}}</td>
+      <td>{{order.cargo.price}}</td>
+      <td>{{order.address}}</td>
+      <td>{{order.status}}</td>
       <td>
-        <a class="btn btn-success text-white" data-target="#exampleModalCenter" data-toggle="modal" type="button">
-          <span class="glyphicon glyphicon-remove"></span> Order
+        <a (click)="setSelected(order)" *ngIf="order.status !== 'Not assigned'" class="btn btn-success text-white"
+           data-target="#orderDetails" data-toggle="modal" id="button"
+           type="button">
+          Details
+        </a>
+        <a (click)="refreshRows()" *ngIf="order.status === 'Not assigned'" class="btn btn-info text-white"
+           data-target="#driverAssign" data-toggle="modal" type="button">
+          Assign driver
         </a>
       </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
     </tr>
     </tbody>
   </table>

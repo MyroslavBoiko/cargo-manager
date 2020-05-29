@@ -17,7 +17,8 @@ import {CustomerOrdersComponent} from './components/customer/customer-orders/cus
 import {DriverOrdersComponent} from './components/driver/driver-orders/driver-orders.component';
 import {DriverTransportComponent} from './components/driver/driver-transport/driver-transport.component';
 import {CheckoutComponent} from './components/customer/checkout/checkout.component';
-import {CargoListComponent} from "./components/manager/cargo-list/cargo-list.component";
+import {CargoListComponent} from './components/manager/cargo-list/cargo-list.component';
+import {DriverListComponent} from './components/manager/driver-list/driver-list.component';
 
 
 const routes: Routes = [
@@ -54,7 +55,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'orders', component: OrdersComponent},
-      {path: 'cargoes', component: CargoListComponent}
+      {path: 'cargoes', component: CargoListComponent},
+      {path: 'drivers', component: DriverListComponent}
     ]
   },
   {path: '**', component: HomeComponent}

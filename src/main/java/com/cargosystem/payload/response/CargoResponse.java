@@ -1,24 +1,21 @@
-package com.cargosystem.model;
+package com.cargosystem.payload.response;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "cargo")
-public class Cargo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CargoResponse {
     private Long id;
 
-    @Column(unique = true)
     private String name;
 
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Company company;
+    private String companyName;
 
-    public Cargo() {
+    public CargoResponse(Long id, String name, BigDecimal price, String companyName) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.companyName = companyName;
     }
 
     public Long getId() {
@@ -45,11 +42,11 @@ public class Cargo {
         this.price = price;
     }
 
-    public Company getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

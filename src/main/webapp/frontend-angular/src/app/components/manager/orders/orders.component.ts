@@ -17,8 +17,8 @@ declare var $: any;
 export class OrdersComponent implements OnInit {
 
   selected: Order;
-  orders: Order[];
-  drivers: Driver[];
+  orders: any = {};
+  drivers: any = {};
   transport: Transport[];
 
   clickedDriverRowNum: number;
@@ -34,9 +34,9 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.clickedDriverRowNum = 0;
     this.clickedTransportRowNum = 0;
-    this.orders = this.orderService.getOrders();
-    this.drivers = this.driverService.getDrivers();
+    this.drivers = this.parseDrivers();
     this.transport = this.transportService.getTransport();
+    this.parseOrders();
   }
 
   setSelected(order: Order) {
@@ -59,9 +59,30 @@ export class OrdersComponent implements OnInit {
     this.clickedTransportRow = transport;
   }
 
-  refreshRows() {
+  refreshRows(order: Order) {
+    this.selected = order;
     this.clickedDriverRowNum = 0;
     this.clickedTransportRowNum = 0;
+  }
+
+  parseOrders() {
+    this.orderService.getOrders().subscribe(
+      data => {
+        this.orders = data;
+      },
+      err => {
+        console.log(err.error.message);
+      });
+  }
+
+  parseDrivers() {
+    this.driverService.getAllDrivers().subscribe(
+      data => {
+        this.drivers = data;
+      },
+      err => {
+        console.log(err.error.message);
+      });
   }
 }
 

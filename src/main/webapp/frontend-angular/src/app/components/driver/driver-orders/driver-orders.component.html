@@ -1,52 +1,57 @@
 <div class="row mt-4">
-  <table class="table table-striped table-dark">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Product name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Address</th>
-      <th scope="col">Status</th>
-      <th scope="col">Transport number</th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>FE1231231FF</td>
-      <td>
-        <a class="btn btn-success text-white" type="button">
-          <span class="glyphicon glyphicon-remove"></span> Order
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="card col-12 pr-0 pl-0">
+    <div class="card-header font-weight-bold">Assigned orders</div>
+    <div class="card-body">
+      <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Address</th>
+          <th scope="col">Status</th>
+          <th scope="col">Transport number</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Oil</td>
+          <td>124</td>
+          <td>Kyiv, Harmatna st.</td>
+          <td>On the way</td>
+          <td>FE1231231FF</td>
+          <td>
+            <a class="btn btn-success text-white w-100" type="button">
+              Mark as arrived
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Sand</td>
+          <td>59</td>
+          <td>Kyiv, Harmatna st.</td>
+          <td>On the way</td>
+          <td>FE1231231FF</td>
+          <td><a class="btn btn-success text-white w-100" type="button">
+            Mark as arrived
+          </a></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Grain</td>
+          <td>269</td>
+          <td>Kyiv, Peremohy st.</td>
+          <td>Assigned</td>
+          <td>AA1123AA</td>
+          <td><a class="btn btn-info text-white w-100" type="button">
+            Mark as In progress
+          </a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

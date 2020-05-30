@@ -16,7 +16,13 @@ export class GoodsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.goods = this.cargoService.getCargoList();
+    this.cargoService.getCargoList().subscribe(
+      data => {
+        this.goods = data;
+      },
+      err => {
+        console.log(JSON.parse(err.error).message);
+      });
   }
 
   passCargoToCheckout(good: Cargo) {

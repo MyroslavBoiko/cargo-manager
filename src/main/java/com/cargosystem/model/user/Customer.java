@@ -1,6 +1,7 @@
 package com.cargosystem.model.user;
 
 import com.cargosystem.model.PurchaseOrder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class Customer {
     private Long id;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private Set<PurchaseOrder> purchaseOrders;
 
     @OneToOne

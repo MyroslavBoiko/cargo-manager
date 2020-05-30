@@ -17,10 +17,10 @@
               <h5 class="card-header">Customer info</h5>
               <div class="card-body">
                 <div>
-                  <p><strong>First name: </strong> {{selected.customer.firstName}}</p>
-                  <p><strong>Last name: </strong> {{selected.customer.lastName}}</p>
+                  <p><strong>First name: </strong> {{selected.customer.user.firstName}}</p>
+                  <p><strong>Last name: </strong> {{selected.customer.user.lastName}}</p>
                   <p><strong>Address: </strong> {{selected.address}}</p>
-                  <p><strong>Email: </strong>{{selected.customer.email}}</p>
+                  <p><strong>Email: </strong>{{selected.customer.user.email}}</p>
                 </div>
 
               </div>
@@ -45,12 +45,13 @@
             <div class="card h-100">
               <h5 class="card-header">Driver info</h5>
               <div class="card-body">
-                <div>
-                  <p><strong>First name: </strong> {{selected.driver.firstName}}</p>
-                  <p><strong>Last name: </strong> {{selected.driver.lastName}}</p>
-                  <p><strong>Email: </strong> {{selected.driver.email}}</p>
-                  <p><strong>License: </strong> {{selected.driver.license}}</p>
+                <div *ngIf="selected.driver; else elseDriverBlock">
+                  <p><strong>First name: </strong> {{selected.driver.user.firstName}}</p>
+                  <p><strong>Last name: </strong> {{selected.driver.user.lastName}}</p>
+                  <p><strong>Email: </strong> {{selected.driver.user.email}}</p>
+                  <p><strong>License: </strong> {{selected.driver.licenseNumber}}</p>
                 </div>
+                <ng-template #elseDriverBlock><h3 class="text-danger">No driver assigned</h3></ng-template>
               </div>
             </div>
           </div>
@@ -58,12 +59,21 @@
             <div class="card h-100">
               <h5 class="card-header">Transport info</h5>
               <div class="card-body">
-                <div>
-                  <p><strong>Brand: </strong> {{selected.transport.brand}}</p>
-                  <p><strong>Number: </strong> {{selected.transport.numberPlate}}</p>
-                  <p><strong>Required category: </strong> {{selected.transport.category}}</p>
-                  <p><strong>Max weight: </strong> {{selected.transport.maxWeight}}</p>
+                <div *ngIf="selected.driver; else elseTransportBlock">
+                  <p><strong>Brand: </strong>
+                    <!--                    {{selected.transport.brand}}-->
+                    DAF</p>
+                  <p><strong>Number: </strong>
+                    <!--                    {{selected.transport.numberPlate}}-->
+                    AA1234AA</p>
+                  <p><strong>Required category: </strong>
+                    <!--                    {{selected.transport.category}}-->
+                    B</p>
+                  <p><strong>Max weight: </strong>
+                    <!--                    {{selected.transport.maxWeight}}-->
+                    15000</p>
                 </div>
+                <ng-template #elseTransportBlock><h3 class="text-danger">No transport assigned</h3></ng-template>
               </div>
             </div>
           </div>
@@ -110,10 +120,10 @@
                 <tr (click)="switchClickedDriverRow(i + 1, driver)" *ngFor="let driver of drivers; let i = index"
                     [ngClass]="{'bg-success': i + 1 === clickedDriverRowNum}">
                   <th scope="row">{{i + 1}}</th>
-                  <td>{{driver.firstName + ' ' + driver.lastName}}</td>
-                  <td>{{driver.email}}</td>
-                  <td><p *ngFor="let category of driver.licenseCategories"
-                         class="badge badge-warning p-2 ml-1 mr-1">{{category}}</p></td>
+                  <td>{{driver.user.firstName + ' ' + driver.user.lastName}}</td>
+                  <td>{{driver.user.email}}</td>
+                  <td><p *ngFor="let category of driver.categories"
+                         class="badge badge-warning p-2 ml-1 mr-1">{{category.licenseCategory}}</p></td>
                 </tr>
                 </tbody>
               </table>
@@ -164,27 +174,30 @@
     <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Customer</th>
       <th scope="col">Cargo</th>
       <th scope="col">Price</th>
       <th scope="col">Address</th>
       <th scope="col">Status</th>
-      <th scope="col"></th>
+      <th scope="col" style="width: 15%;">Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let order of orders; let i = index">
       <th scope="row">{{i + 1}}</th>
+      <td>{{order.customer.user.firstName + ' ' + order.customer.user.lastName }}</td>
       <td>{{order.cargo.name}}</td>
       <td>{{order.cargo.price}}</td>
       <td>{{order.address}}</td>
-      <td>{{order.status}}</td>
+      <td>{{order.status.status}}</td>
       <td>
-        <a (click)="setSelected(order)" *ngIf="order.status !== 'Not assigned'" class="btn btn-success text-white"
+        <a (click)="setSelected(order)" *ngIf="order.status.status !== 'NOT_ASSIGNED'"
+           class="btn btn-success text-white"
            data-target="#orderDetails" data-toggle="modal" id="button"
            type="button">
           Details
         </a>
-        <a (click)="refreshRows()" *ngIf="order.status === 'Not assigned'" class="btn btn-info text-white"
+        <a (click)="refreshRows(order)" *ngIf="order.status.status === 'NOT_ASSIGNED'" class="btn btn-info text-white"
            data-target="#driverAssign" data-toggle="modal" type="button">
           Assign driver
         </a>

@@ -19,6 +19,7 @@ import {DriverTransportComponent} from './components/driver/driver-transport/dri
 import {CheckoutComponent} from './components/customer/checkout/checkout.component';
 import {CargoListComponent} from './components/manager/cargo-list/cargo-list.component';
 import {DriverListComponent} from './components/manager/driver-list/driver-list.component';
+import {ReportsComponent} from './components/manager/reports/reports.component';
 
 
 const routes: Routes = [
@@ -52,11 +53,12 @@ const routes: Routes = [
     component: BoardManagerComponent,
     canActivate: [ManagerGuard],
     children: [
-      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'orders', component: OrdersComponent},
-      {path: 'cargoes', component: CargoListComponent},
-      {path: 'drivers', component: DriverListComponent}
+        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+        {path: 'dashboard', component: DashboardComponent},
+        {path: 'orders', component: OrdersComponent},
+        {path: 'cargoes', component: CargoListComponent},
+        {path: 'drivers', component: DriverListComponent},
+        {path: 'reports', component: ReportsComponent},
     ]
   },
   {path: '**', component: HomeComponent}

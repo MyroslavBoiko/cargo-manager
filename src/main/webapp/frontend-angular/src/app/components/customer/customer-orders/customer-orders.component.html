@@ -7,41 +7,24 @@
       <th scope="col">Price</th>
       <th scope="col">Address</th>
       <th scope="col">Status</th>
-      <th scope="col"></th>
+      <th class="text-center" scope="col">Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>
-        <a class="btn btn-success text-white" type="button">
-          <span class="glyphicon glyphicon-remove"></span> Order
+    <tr *ngFor="let order of myOrders; let i = index">
+      <th scope="row">{{i + 1}}</th>
+      <td>{{order.cargoName}}</td>
+      <td>{{order.price}}</td>
+      <td>{{order.address}}</td>
+      <td>{{order.status}}</td>
+      <td class="text-center">
+        <a *ngIf="order.status === 'DELIVERED'" class="btn btn-success text-white" type="button">
+          Mark as arrived
+        </a>
+        <a *ngIf="order.status === 'NOT_ASSIGNED'" class="btn btn-danger text-white" type="button">
+          Delete
         </a>
       </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-      <td><a class="btn btn-success text-white" type="button">
-        <span class="glyphicon glyphicon-remove"></span> Order
-      </a></td>
     </tr>
     </tbody>
   </table>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {OrderService} from '../../../_services/order/order.service';
+import {TokenStorageService} from "../../../_services/token/token-storage.service";
 
 @Component({
   selector: 'app-customer-orders',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerOrdersComponent implements OnInit {
 
-  constructor() { }
+  myOrders: any = {};
+
+  constructor(private orderService: OrderService,
+              private tokenStorage: TokenStorageService) {
+  }
 
   ngOnInit(): void {
+    this.orderService
+        .getCustomerOrders(this.tokenStorage.getUser().username).subscribe(
+        data => {
+          this.myOrders = data;
+        },
+        err => {
+          console.log(err.error.message);
+        });
   }
 
 }

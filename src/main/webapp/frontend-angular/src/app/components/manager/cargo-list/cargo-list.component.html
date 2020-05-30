@@ -1,38 +1,69 @@
-<div class="col-12 mt-4">
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th>Product</th>
-      <!--      <th>Quantity</th>-->
-      <th class="text-center">Price</th>
-      <!--      <th class="text-center">Total</th>-->
-      <th> </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let cargo of cargoes; let i = index;">
-      <td class="col-sm-8 col-md-6">
-        <div class="media">
-          <img class="media-object mr-2"
-               src="assets/images/product-icon.jpg"
-               style="width: 72px; height: 72px;">
-          <div class="media-body">
-            <h5 class="media-heading">{{cargo.name}}</h5>
-            <h6 class="media-heading">{{cargo.company.name}}</h6>
+<div class="row mt-4">
+  <div class="col-12 mb-2">
+    <div class="card">
+      <div class="card-header bg-dark text-white font-weight-bold">Add product</div>
+      <div class="card-body">
+        <form #f="ngForm"
+              (ngSubmit)="onSubmit(f)"
+              class="form-inline"
+              id="myForm"
+              novalidate>
+          <div class="col-5 form-group">
+            <label class="col-form-label mr-1 " for="name">Product name</label>
+            <input
+              #name="ngModel"
+              [(ngModel)]="model.name" class="form-control mr-0"
+              id="name"
+              name="name" required type="text">
           </div>
-        </div>
-      </td>
-      <!--      <td class="col-sm-1 col-md-1" style="text-align: center">-->
-      <!--        <input class="form-control" max="10" min="1" type="number" value="3">-->
-      <!--      </td>-->
-      <td class="col-sm-1 col-md-1 text-center"><strong>{{cargo.price}}$</strong></td>
-      <!--      <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>-->
-      <td class="col-sm-1 col-md-1">
-        <a class="btn btn-success text-white" type="button">
-          <span class="glyphicon glyphicon-remove"></span> Order
-        </a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+          <div class="col-5 form-group">
+            <label class="col-form-label ml-5 mr-1" for="price">Price</label>
+            <input
+              #price="ngModel"
+              [(ngModel)]="model.price" class="form-control mr-0"
+              id="price"
+              name="price" required type="number">
+          </div>
+          <div class="col-2">
+            <button [disabled]="!f.form.valid" class="btn btn-success" form="myForm" type="submit">Add product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th>Product</th>
+        <th class="text-center">Price</th>
+        <th> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cargo of cargoes; let i = index;">
+        <td class="col-sm-8 col-md-6">
+          <div class="media">
+            <img class="media-object mr-2"
+                 src="assets/images/product-icon.jpg"
+                 style="width: 72px; height: 72px;">
+            <div class="media-body">
+              <h5 class="media-heading">{{cargo.name}}</h5>
+              <h6 class="media-heading">Company: {{cargo.companyName}}</h6>
+            </div>
+          </div>
+        </td>
+        <td class="col-sm-1 col-md-1 text-center"><strong>{{cargo.price}}$</strong></td>
+        <td class="col-sm-1 col-md-1">
+          <a (click)="deleteCargo(cargo)" class="btn btn-danger text-white" type="button">
+            <span class="glyphicon glyphicon-remove"></span> Delete
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+
+

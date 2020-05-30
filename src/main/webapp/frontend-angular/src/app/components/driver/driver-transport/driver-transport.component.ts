@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Transport} from "../../../_models/Transport";
+import {TransportService} from "../../../_services/transport/transport.service";
 
 @Component({
   selector: 'app-driver-transport',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DriverTransportComponent implements OnInit {
 
-  constructor() { }
+  transport: Transport[];
+
+  constructor(private transportService: TransportService) {
+  }
 
   ngOnInit(): void {
+    this.transport = this.transportService.getTransport();
+    this.transport.splice(1, 2);
   }
+
 
 }

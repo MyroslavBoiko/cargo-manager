@@ -8,9 +8,10 @@ export class Driver {
   email: string;
   company: Company;
   licenseCategories: string[];
+  status: string;
 
-  constructor(id: number, firstName: string, lastName: string,
-              license: string, email: string, company: Company, licenseCategories: string[]) {
+
+  constructor(id: number, firstName: string, lastName: string, license: string, email: string, company: Company, licenseCategories: string[], status: string) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -18,6 +19,6 @@ export class Driver {
     this.email = email;
     this.company = company;
     this.licenseCategories = licenseCategories;
+    this.status = status;
   }
-
 }

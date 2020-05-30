@@ -28,6 +28,7 @@ import {DriverTransportComponent} from './components/driver/driver-transport/dri
 import {CheckoutComponent} from './components/customer/checkout/checkout.component';
 import {CargoListComponent} from './components/manager/cargo-list/cargo-list.component';
 import {DriverListComponent} from './components/manager/driver-list/driver-list.component';
+import {ReportsComponent} from './components/manager/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {DriverListComponent} from './components/manager/driver-list/driver-list.
     DriverTransportComponent,
     CheckoutComponent,
     CargoListComponent,
-    DriverListComponent
+    DriverListComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

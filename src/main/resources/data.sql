@@ -3,6 +3,12 @@ INSERT INTO roles(role) VALUES
 ('ROLE_CUSTOMER'),
 ('ROLE_DRIVER');
 
+INSERT INTO status(status) VALUES
+ ('NOT_ASSIGNED'),
+ ('ASSIGNED'),
+ ('ARRIVED'),
+ ('DELIVERED');
+
 INSERT INTO license_category(category) VALUES
 ('B'),
 ('BE'),
@@ -35,3 +41,12 @@ INSERT INTO driver_categories VALUES
 (1, 1),
 (1, 2);
 
+INSERT INTO cargo VALUES
+(1, 'Sand', 12.4, 1),
+(2, 'Oil', 122.4, 1),
+(3, 'Grain', 52.4, 1),
+(4, 'Paper', 142.4, 1);
+
+INSERT INTO purchase_order VALUES
+(1, 'Kyiv, Peremohy st.', 1, 1, 1, NULL, 1),
+(2, 'Kyiv', 1, 1, 1, 1, 4);

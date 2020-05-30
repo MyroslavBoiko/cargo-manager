@@ -1,15 +1,13 @@
-import {Company} from './Company';
-
 export class Cargo {
   id: number;
   name: string;
   price: number;
-  company: Company;
+  companyName: string;
 
-  constructor(id: number, name: string, price: number, company: Company) {
+  constructor(id: number, name: string, price: number, companyName: string) {
     this.id = id;
     this.name = name;
     this.price = price;
-    this.company = company;
+    this.companyName = companyName;
   }
 }
